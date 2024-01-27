@@ -86,9 +86,6 @@
             /* height: 500px; */
         }
 
-
-
-
         /* .card::before {
                     content: "";
                     position: absolute;
@@ -284,42 +281,106 @@
             }
         }
 
-
-
         /* Apply the animation to the title */
         .Animated-Text {
             background: linear-gradient(to right,
-                    red, orange, yellow, green, blue, indigo, violet);
+                    red,
+                    orange,
+                    yellow,
+                    green,
+                    blue,
+                    indigo,
+                    violet);
             background-size: 200% 200%;
             animation: gradientAnimation 10s infinite;
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
 
+        /* Text Container */
+        .text-container {
+            background-color: aliceblue;
+            height: auto;
+            margin: 1rem;
+            border-radius: 10px;
+            border: 2px solid gray;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1.2rem;
+        }
+
+        .text-container p {
+            padding: 2rem;
+            /* color: black */
+        }
+
+        /* Typewriter */
+        .blinking-cursor {
+            margin-left: 5px;
+            background-color: #fff;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            50% {
+                opacity: 1;
+            }
+
+            50.1%,
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* hiding something */
+        .hide {
+            display: none;
         }
     </style>
 </head>
 
 <body>
-    <header>
-        <ul>
+    <header style="height: 5rem">
+        <!-- <ul>
             <li><a href="/chat">Home</a></li>
-        </ul>
+        </ul> -->
     </header>
 
-    <h1 class="Title">FAMPAY<span class="Animated-Text"> PROMPT: ASK YOUR QUERY</span></h1>
-
-    <!-- <form action="recommend_books" method="post">
-      <input name="user_input" type="text" placeholder="Search..." />
-      <button id="submitBtn" type="submit">Search</button>
-    </form> -->
-
-    <form class="input-group" action="recommend_books" method="post">
-        <input name="user_input" type="text" class="input" placeholder="Write your query" />
+    <h1 class="Title">
+        FAMPAY<span class="Animated-Text"> PROMPT: ASK YOUR QUERY</span>
+    </h1>
+    <form class="input-group" action="{% url 'user_query' %}" method="post">
+        {% csrf_token %}
+        <input name="query" type="text" class="input" placeholder="Write your query" />
         <button type="submit" class="btn btn--accent" id="sumit">send</button>
     </form>
 
+    <div class="text-container hide">
+        <p id="typed-text"></p>
+    </div>
 
+    <script>
+        const textContainer = document.querySelector(".text-container");
+        const typedTextElement = document.getElementById("typed-text");
+
+        async function typeText(text) {
+            // Split the text into an array of characters
+            const characters = text.split('');
+
+            // Iterate over each character and display it with a delay
+            for (const char of characters) {
+                typedTextElement.innerHTML += char;
+                await new Promise(resolve => setTimeout(resolve, 20)); // Adjust the delay as needed
+            }
+        }
+
+        // Sample usage
+        const responseText = "{{ response|safe }}"; // Replace with the actual response from Django
+        textContainer.classList.remove("hide");
+        typeText(responseText);
+    </script>
 </body>
 
 </html>
