@@ -6,9 +6,7 @@ It provide the information about the famapp and how to use it.
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [Configuration](#configuration)
-- [Contributing](#contributing)
-- [License](#license)
+
 
 ## Installation
 
