@@ -366,18 +366,17 @@
         const typedTextElement = document.getElementById("typed-text");
 
         async function typeText(text) {
-            // Split the text into an array of characters
+
             const characters = text.split('');
 
-            // Iterate over each character and display it with a delay
             for (const char of characters) {
                 typedTextElement.innerHTML += char;
-                await new Promise(resolve => setTimeout(resolve, 20)); // Adjust the delay as needed
+                await new Promise(resolve => setTimeout(resolve, 20));
             }
         }
 
         // Sample usage
-        const responseText = "{{ response|safe }}"; // Replace with the actual response from Django
+        const responseText = "{{ response|safe }}";
         textContainer.classList.remove("hide");
         typeText(responseText);
     </script>
