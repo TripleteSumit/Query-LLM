@@ -77,6 +77,8 @@
         /*body*/
         body {
             background-color: rgb(14, 17, 23);
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
         }
 
         .container {
@@ -86,47 +88,17 @@
             /* height: 500px; */
         }
 
-        /* .card::before {
-                    content: "";
-                    position: absolute;
-                    top: -2px;
-                    left: -2px;
-                    right: -2px;
-                    bottom: -2px;
-                    border: 2px solid transparent;
-                    opacity: 1;
-                    transition: opacity 0.3s ease;
-                    pointer-events: none;
-                    z-index: -1;
-                  } */
-
-        .card:hover {
-            box-shadow: 0px 0px 35px hotpink;
-            border: 1px solid none;
-            transform: scale(1.03);
+        .center-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
         }
 
-        @keyframes glowAnimation {
-            0% {
-                box-shadow: 0 0 5px rgba(255, 0, 0, 0.8);
-            }
 
-            25% {
-                box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
-            }
 
-            50% {
-                box-shadow: 0 0 5px rgba(255, 255, 0, 0.8);
-            }
 
-            75% {
-                box-shadow: 0 0 20px rgba(255, 255, 0, 0.8);
-            }
-
-            100% {
-                box-shadow: 0 0 5px rgba(0, 255, 255, 0.8);
-            }
-        }
 
         .Title {
             color: #33bbcf;
@@ -252,9 +224,9 @@
 
         .input-group .input {
             border: 0;
-            flex-grow: 1;
+            /* flex-grow: 1; */
+            width: 650px;
             padding: 15px 20px;
-            width: 0;
         }
 
         .input-group .btn {
@@ -301,16 +273,19 @@
         /* Text Container */
         .text-container {
             background-color: aliceblue;
-            height: auto;
-            margin: 1rem;
+            max-width: 800px;
+            width: 100%;
+            padding: 1rem;
             border-radius: 10px;
             border: 2px solid gray;
-            font-family: Arial, Helvetica, sans-serif;
             font-size: 1.2rem;
+            box-sizing: border-box;
+
+            margin: 5rem auto
         }
 
         .text-container p {
-            padding: 2rem;
+            padding: 4rem;
             /* color: black */
         }
 
@@ -347,18 +322,19 @@
             <li><a href="/chat">Home</a></li>
         </ul> -->
     </header>
+    <div class="center-container">
+        <h1 class="Title">
+            FAMPAY<span class="Animated-Text"> PROMPT: ASK YOUR QUERY</span>
+        </h1>
+        <form class="input-group" action="{% url 'user_query' %}" method="post">
+            {% csrf_token %}
+            <input name="query" type="text" class="input" placeholder="Write your query" />
+            <button type="submit" class="btn btn--accent" id="sumit">send</button>
+        </form>
 
-    <h1 class="Title">
-        FAMPAY<span class="Animated-Text"> PROMPT: ASK YOUR QUERY</span>
-    </h1>
-    <form class="input-group" action="{% url 'user_query' %}" method="post">
-        {% csrf_token %}
-        <input name="query" type="text" class="input" placeholder="Write your query" />
-        <button type="submit" class="btn btn--accent" id="sumit">send</button>
-    </form>
-
-    <div class="text-container hide">
-        <p id="typed-text"></p>
+        <div class="text-container hide">
+            <p id="typed-text"></p>
+        </div>
     </div>
 
     <script>
@@ -375,7 +351,6 @@
             }
         }
 
-        // Sample usage
         const responseText = "{{ response|safe }}";
         textContainer.classList.remove("hide");
         typeText(responseText);
