@@ -8,6 +8,7 @@ django = "*"
 "google.generativeai" = "*"
 embedchain = "*"
 python-decouple = "*"
+whitenoise = "*"
 
 [dev-packages]
 
